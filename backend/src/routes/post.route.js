@@ -2,6 +2,7 @@ import express from 'express';
 import * as postController from '../controllers/post.controller';
 import { userAuth } from '../middlewares/auth.middleware';
 import { PostValidator } from '../validators/post.validator';
+
 const router = express.Router();
 
 router.post('/', userAuth, PostValidator, postController.createPost)
@@ -26,4 +27,6 @@ router.get('/getPostById/:id', userAuth, postController.getPostById)
 
 router.get('/getAllPost/:searchText', userAuth, postController.findPostByText)
 
+
+router.post('/:id', commentValidator, blogController.giveCommentNewLogic);
 export default router;

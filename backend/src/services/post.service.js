@@ -123,3 +123,11 @@ export const findPostByText = async (searchText)=>{
         return data
       
 }
+   
+  export const giveCommentNewLogic=async(req)=>{
+    var createComment = await Comment.create({
+      parent: req.params.id,
+      comment: req.body.comment
+    });
+    return createComment;
+  }
