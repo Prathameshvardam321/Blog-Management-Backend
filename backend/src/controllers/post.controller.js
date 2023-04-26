@@ -40,3 +40,16 @@ export const updatePost = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deletePost = async (req, res, next) => {
+    try {
+      const data = await PostService.deletePost(req)
+      res.status(HttpStatus.CREATED).json({
+        code: HttpStatus.CREATED,
+        data: data,
+        message: 'Post deleted successfully'
+      });
+    } catch (error) {
+      next(error)
+    }
+  }

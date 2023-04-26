@@ -10,5 +10,6 @@ router.get("/", postController.getAllPost)
 
 router.put('/editpost/:id', postController.updatePost)
 
+router.delete('/deletePost/:id', postController.deletePost)
 
 export default router;

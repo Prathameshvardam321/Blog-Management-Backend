@@ -17,3 +17,8 @@ export const updatePost = async (_id, body) => {
     console.log(data);
     return data
 }
+
+export const deletePost = async (body) => {
+    const data = await postModel.findOneAndDelete({ "_id": body.params.id })
+    return data
+}
