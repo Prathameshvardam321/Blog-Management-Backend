@@ -152,3 +152,18 @@ export const deletePost = async (req, res, next) => {
       next(error)
     }
   }
+
+  export const giveComment = async (req, res, next) => {
+    const data = await BlogService.giveComment(req);
+    res.status(201).json({
+      data: data
+    });
+  };
+  export const giveCommentNewLogic = async (req, res, next) => {
+    // const data = await BlogService.getCommentByParentID(req.params.id);
+    const data = await BlogService.giveCommentNewLogic(req);
+    res.status(201).json({
+      data: data
+    });
+  };
+  
