@@ -8,7 +8,7 @@ const routes = () => {
     res.json('Welcome');
   });
   router.use('/users', userRoute);
- 
+  router.use('/post',postRoute)
 
   return router;
 };
