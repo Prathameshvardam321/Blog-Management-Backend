@@ -124,10 +124,104 @@ export const findPostByText = async (searchText)=>{
       
 }
    
-  export const giveCommentNewLogic=async(req)=>{
-    var createComment = await Comment.create({
-      parent: req.params.id,
-      comment: req.body.comment
+
+export const arrangeByLikesSortHighToLow = async () => {
+    const allPost = await postModel.find().sort({ NumberOfLikes: -1 })
+
+
+    return allPost
+}
+
+export const arrangeByLikesSortLowToHigh = async () => {
+    const allPost = await postModel.find().sort({ NumberOfLikes: 1 })
+    return allPost
+}
+
+export const oneMoreLogic = async (req) => {
+    var parentId = req.params.id;
+    var data = req.body.Comment;
+    let created = await finalcommentModel.create({
+        Author: req.params.Author,
+        blogId: parentId,
+        Comment: data,
+        likes: []
     });
-    return createComment;
-  }
+    return created
+}
+
+
+
+
+export const replayComment = async (req) => {
+    var parentId = req.params.id;
+    var data = req.body.comment;
+    var blogId = req.params.blogid;
+    console.log(data, parentId, blogId, '=================>');
+
+    let created = await finalcommentModel.create({
+        blogId: blogId,
+        parent: parentId,
+        Comment: data,
+
+    });
+    return created
+}
+
+export const likeCommentPost = async (id, email) => {
+    console.log(id, 'ID');
+
+    const data = await finalcommentModel.findById(id);
+
+    console.log(email, data, 'from like post ===>26');
+
+
+    const { Likes } = data;
+    let data1;
+
+    if (await Likes.includes(email)) {
+        data1 = await finalcommentModel.findByIdAndUpdate(
+            { _id: id },
+            {
+                $pull: { Likes: email }
+            },
+            { new: true }
+        );
+        data1 = await finalcommentModel.findByIdAndUpdate(
+            { _id: id },
+            { NumberOfLikes: data1.Likes.length },
+            { new: true }
+        );
+    } else {
+        data1 = await finalcommentModel.findByIdAndUpdate(
+            { _id: id },
+            {
+                $push: { Likes: email }
+            },
+            { new: true }
+        );
+        data1 = await finalcommentModel.findByIdAndUpdate(
+            { _id: id },
+            { NumberOfLikes: data1.Likes.length },
+            { new: true }
+        );
+    }
+
+    return data1;
+};
+
+export const findAllComment = async (req) => {
+    let parentId = req.params.id;
+    const allComments = await finalcommentModel.find({ blogId: parentId })
+    return allComments
+}
+
+export const deleteComment = async (req) => {
+    let parentId = req.params.id;
+    const deletedComment = await finalcommentModel.findOneAndDelete({ "_id": parentId })
+    return deletedComment
+}
+//authorEmail,comment,commentAuthor
+export const sendEmailFromComment = async (req) => {
+    const data = await sendEmail(req.params.authorEmail, req.body.Comment, req.params.commentAuthor)
+    return data
+}

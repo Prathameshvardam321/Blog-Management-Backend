@@ -153,17 +153,79 @@ export const deletePost = async (req, res, next) => {
     }
   }
 
-  export const giveComment = async (req, res, next) => {
-    const data = await BlogService.giveComment(req);
-    res.status(201).json({
-      data: data
+ 
+export const getAllCommentNewLogic = async (req, res, next) => {
+  const data = await PostService.getAllCommentNewLogic(req.body);
+  console.log(data, "data================");
+  res.status(HttpStatus.OK).json({
+    data: data
+  });
+};
+
+
+export const oneMoreLogic = async (req, res, next) => {
+  const data = await PostService.oneMoreLogic(req);
+  console.log(data, "data================1");
+  res.status(HttpStatus.OK).json({
+    data: data
+  });
+};
+
+export const replayComment = async (req, res, next) => {
+  const data = await PostService.replayComment(req);
+  console.log(data, "data================1");
+  res.status(HttpStatus.OK).json({
+    data: data
+  });
+};
+
+export const likeCommentPost = async (req, res, next) => {
+  try {
+    const data = await PostService.likeCommentPost(req.params.id, req.params.email);
+
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'Post Liked successfully'
     });
-  };
-  export const giveCommentNewLogic = async (req, res, next) => {
-    // const data = await BlogService.getCommentByParentID(req.params.id);
-    const data = await BlogService.giveCommentNewLogic(req);
-    res.status(201).json({
-      data: data
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const findAllComment = async (req, res, next) => {
+  try {
+    const data = await PostService.findAllComment(req);
+
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'All comments feched successfully'
     });
-  };
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteComment = async (req, res, next) => {
+  try {
+    const data = await PostService.deleteComment(req);
+
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'Deleted comment successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const senMailForComment = async (req, res, next) => {
+  try {
+const data = await PostService.sendEmailFromComment(req)
+  } catch (error) {
+
+  }
+}
   
