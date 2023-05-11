@@ -220,8 +220,13 @@ export const deleteComment = async (req) => {
     const deletedComment = await finalcommentModel.findOneAndDelete({ "_id": parentId })
     return deletedComment
 }
-//authorEmail,comment,commentAuthor
+
 export const sendEmailFromComment = async (req) => {
     const data = await sendEmail(req.params.authorEmail, req.body.Comment, req.params.commentAuthor)
     return data
 }
+
+export const getParticularComment = async(id) =>{
+    const data = await finalcommentModel.find({"_id":id})
+    return data
+    }

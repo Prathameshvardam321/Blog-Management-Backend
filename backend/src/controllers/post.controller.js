@@ -229,3 +229,15 @@ const data = await PostService.sendEmailFromComment(req)
   }
 }
   
+export const getParticularComment = async (req, res, next) => {
+  try {
+    const data = await PostService.getParticularComment(req.params.id)
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'fetched data'
+    });
+  } catch (error) {
+    next(error);
+  }
+}

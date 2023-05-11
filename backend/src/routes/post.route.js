@@ -36,7 +36,6 @@ router.get('/:id/comments/', postController.getAllCommentNewLogic)
 
 router.post('/comment/:id/:Author', postController.oneMoreLogic)
 
-
 router.post('/:blogid/replaycomment/:id', postController.replayComment)
 
 router.put('/:id/likeComment/:email', postController.likeCommentPost)
@@ -46,5 +45,7 @@ router.get('/comment/:id', postController.findAllComment)
 router.delete('/comment/:id', postController.deleteComment)
 
 router.post("/sendEmail/:authorEmail/:commentAuthor",postController.senMailForComment)
+
+router.get("/getParticularComment/:id",postController.getParticularComment)
 
 export default router;
