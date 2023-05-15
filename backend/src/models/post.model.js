@@ -29,9 +29,12 @@ const postSchema = new Schema(
             default: "Other"
         },
         Views:{
-            type: [String],
-          
+            type: [String], 
+        },
+        data:{
+            type : String
         }
+
     },
     {
         timestamps: true
